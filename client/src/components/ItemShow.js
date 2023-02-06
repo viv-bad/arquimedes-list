@@ -103,9 +103,9 @@ const ItemShow = ({
   );
 
   // if item.completed (in the database) is true then cross out the item
-  // console.log(item.updatedAt);
 
   const fullDate = item.updatedAt.split("T");
+
   const date = fullDate[0].split("-").reverse().join("/");
   const time = fullDate[1].split(".")[0].slice(0, -3);
 

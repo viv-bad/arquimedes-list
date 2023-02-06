@@ -91,7 +91,7 @@ const App = () => {
       return item;
     });
 
-    setItems([...items, updatedComplete]);
+    setItems(updatedComplete);
   };
 
   const togglePersonOne = async (itemId, personSelected) => {
