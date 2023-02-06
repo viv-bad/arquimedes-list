@@ -15,7 +15,7 @@ const ItemEdit = ({ item, setShowEdit, onEdit }) => {
     setShowEdit(false);
   };
   return (
-    <div className="m-2">
+    <div className="m-2 max-sm:m-0">
       <form onSubmit={handleSubmit}>
         <label>Edit item: </label>
         <input
@@ -23,7 +23,7 @@ const ItemEdit = ({ item, setShowEdit, onEdit }) => {
           onChange={handleChange}
           className="p-1 border-2 border-blue-500 rounded-full text-sm"
         />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded-full ml-5">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded-full ml-5 max-sm:m-1">
           Save
         </button>
       </form>

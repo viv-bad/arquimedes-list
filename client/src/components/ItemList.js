@@ -5,8 +5,8 @@ const ItemList = ({
   onDelete,
   onEdit,
   onComplete,
-  onToggleVivek,
-  onToggleKhadija,
+  onTogglePersonOne,
+  onTogglePersonTwo,
 }) => {
   // variable to return the individual item in the object in a jsx list element
   const listItems = items.map((item) => {
@@ -19,8 +19,8 @@ const ItemList = ({
           onDelete={onDelete}
           onEdit={onEdit}
           onComplete={onComplete}
-          onToggleVivek={onToggleVivek}
-          onToggleKhadija={onToggleKhadija}
+          onTogglePersonOne={onTogglePersonOne}
+          onTogglePersonTwo={onTogglePersonTwo}
         />
       );
     } else {
@@ -29,8 +29,10 @@ const ItemList = ({
   });
 
   return (
-    <div>
-      <ul className="grid grid-cols-2 max-sm:gap-y-8">{listItems}</ul>
+    <div className="max-sm:flex max-sm:justify-center max-sm:mb-4">
+      <ul className="grid grid-cols-2 mb-5 max-sm:gap-14 max-sm:grid-cols-1 max-sm:mb-20 ">
+        {listItems}
+      </ul>
     </div>
   );
 };

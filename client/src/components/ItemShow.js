@@ -5,14 +5,14 @@ const ItemShow = ({
   onDelete,
   onEdit,
   onComplete,
-  onToggleVivek,
-  onToggleKhadija,
+  onTogglePersonOne,
+  onTogglePersonTwo,
 }) => {
   const [crossOut, setCrossOut] = useState(false);
   // const [completed, setCompleted] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [vivek, setVivek] = useState(false);
-  const [khadija, setKhadija] = useState(false);
+  const [personOne, setPersonOne] = useState(false);
+  const [personTwo, setPersonTwo] = useState(false);
   // create handle delete function to pass onDelete function with itemid as arg.
   // Item is passed as props as individual mapped item from item object
   const handleDelete = () => {
@@ -38,14 +38,14 @@ const ItemShow = ({
     // onEdit(item.id, )
   };
 
-  const handleV = () => {
-    setVivek(!vivek);
-    onToggleVivek(item._id, !item.vivek);
+  const handlePersonOne = () => {
+    setPersonOne(!personOne);
+    onTogglePersonOne(item._id, !item.personOne);
   };
 
-  const handleK = () => {
-    setKhadija(!khadija);
-    onToggleKhadija(item._id, !item.khadija);
+  const handlePersonTwo = () => {
+    setPersonTwo(!personTwo);
+    onTogglePersonTwo(item._id, !item.personTwo);
   };
 
   //here, we assign the highlighted violet tag class if vivek is true (upon clicking handleV) or khadija is true (clicking handleK), else we leave the button as an unhighlighted classname
@@ -53,33 +53,33 @@ const ItemShow = ({
     <div className="flex gap-3">
       <button
         className={
-          item.vivek
+          item.personOne
             ? "bg-violet-500" + " px-2 rounded-full text-white"
             : "bg-white" +
               " px-2 rounded-full text-black hover:bg-violet-500 hover:text-white"
         }
-        onClick={handleV}
+        onClick={handlePersonOne}
       >
-        {item.vivek ? "Vivek" : "V"}
+        {item.personOne ? "Person 1 " : "P-1"}
       </button>
 
       <button
         className={
-          item.khadija
+          item.personTwo
             ? "bg-fuchsia-500" + " px-2 rounded-full text-white"
             : "bg-white" +
               " px-2 rounded-full text-black hover:bg-fuchsia-500 hover:text-white"
         }
-        onClick={handleK}
+        onClick={handlePersonTwo}
       >
-        {item.khadija ? "Khadija" : "K"}
+        {item.personTwo ? "Person 2" : "P-2"}
       </button>
     </div>
   );
 
   // set the content to be the list of items with the cross out button
   let content = (
-    <div className="flex gap-4">
+    <div className="flex gap-4 mb-4">
       <h3 className="font-semibold">{item.item}</h3>
       <div>
         <button onClick={handleCrossOut}>
@@ -103,9 +103,11 @@ const ItemShow = ({
   );
 
   // if item.completed (in the database) is true then cross out the item
-  let today = new Date().toLocaleDateString();
+  // console.log(item.updatedAt);
 
-  // let time = today.getTime();
+  const fullDate = item.updatedAt.split("T");
+  const date = fullDate[0].split("-").reverse().join("/");
+  const time = fullDate[1].split(".")[0].slice(0, -3);
 
   if (item.completed) {
     content = (
@@ -117,7 +119,10 @@ const ItemShow = ({
             <span className="text-black"> {item.item} </span>
           </s>
           <br />
-          <span className="text-red-400">Completed: {today} </span>
+          <span className="text-red-400 text-xs">
+            {item.updatedAt ? `Completed: on ${date} at ${time}` : null}
+            {/* Completed: {item.updatedAt}{" "} */}
+          </span>
         </h3>
         <div>
           <button onClick={handleCrossOut}>

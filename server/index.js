@@ -1,9 +1,10 @@
-require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const ItemModel = require("./models/Items");
 const cors = require("cors");
 const app = express();
+
+require("dotenv").config();
 app.use(express.json());
 app.use(cors());
 
@@ -18,14 +19,16 @@ app.get("/getItems", (req, res) => {
     } else {
       res.json(result);
     }
-  });
+  }).sort({ createdAt: -1 });
 });
 
 app.post("/createItem", async (req, res) => {
   const item = req.body;
   const newItem = new ItemModel(item);
+
   await newItem.save();
 
+  // console.log(newItem);
   res.json(newItem);
 });
 
@@ -57,6 +60,7 @@ app.patch("/completeItem/:id", async (req, res) => {
   // console.log(id);
   await ItemModel.findByIdAndUpdate(id, req.body, {
     new: true,
+    upsert: true,
     runValidators: true,
   }).then((result) => res.json(result));
 });
@@ -71,6 +75,6 @@ app.patch("/assignItemToPerson/:id", async (req, res) => {
   }).then((result) => res.json(result));
 });
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log(`Express server listening on port ${process.env.PORT}`);
+app.listen(process.env.DEV_PORT || 3001, () => {
+  console.log(`Express server listening on port ${process.env.DEV_PORT}`);
 });

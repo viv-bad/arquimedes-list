@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ItemCreate from "./components/ItemCreate";
 import ItemList from "./components/ItemList";
+import Footer from "./components/Footer";
 import axios from "axios";
 
 const App = () => {
@@ -8,12 +9,8 @@ const App = () => {
 
   const fetchItems = () => {
     // make sure to use http not https
-    // const response = axios.get("http://localhost:3001/getItemss");
-
-    // const { data } = response;
-
-    // setItems(data);
-    // console.log(data);
+    // http://localhost:3000/ - local dev host
+    // https://arquimedes-list-api.onrender.com/ online hosted server
 
     axios
       .get("http://localhost:3001/getItems")
@@ -32,15 +29,9 @@ const App = () => {
 
     const { data } = response;
 
-    setItems([...items, data]);
-    // create the new object with the new item and an id
-    // const newItem = {
-    //   id: Math.ceil(Math.random() * 1000),
-    //   item,
-    // };
-
     // set the state array to the original item object plus the new item object
-    // setItems([...items, newItem]);
+    //add new item data to the start/top of the list
+    setItems([data, ...items]);
   };
 
   const deleteItemById = async (itemId) => {
@@ -48,9 +39,10 @@ const App = () => {
     await axios.delete(`http://localhost:3001/deleteItem/${itemId}`);
 
     const updatedItems = items.filter((item) => {
+      //return every item that is not of the itemId of the item of choice
       return item._id !== itemId;
     });
-    // // console.log(updatedItems);
+    //set the state to the new array of filtered items
     setItems(updatedItems);
   };
 
@@ -62,12 +54,10 @@ const App = () => {
     );
 
     const { data } = response;
-    console.log(data);
 
     const updatedItem = items.map((item) => {
       if (item._id === itemId) {
         return {
-          // ...response.data
           ...item,
           item: newItem,
         };
@@ -76,7 +66,6 @@ const App = () => {
     });
 
     setItems(updatedItem);
-    console.log(items);
   };
 
   // add function to toggle completed to true
@@ -86,15 +75,10 @@ const App = () => {
       `http://localhost:3001/completeItem/${itemId}`,
       { completed: isItemCompleted }
     );
-
-    console.log(response.data.completed);
-    // // console.log(data.completed);
-    // console.log(isCompleted);
     // update the data on the frontend with the data
     const updatedComplete = items.map((item) => {
       if (item._id === itemId) {
         return {
-          // ...response.data
           ...item,
           completed: isItemCompleted,
         };
@@ -102,15 +86,13 @@ const App = () => {
       return item;
     });
 
-    // console.log(updatedComplete);
-    setItems(updatedComplete);
-    // setIsCompleted(!isItemCompleted);
+    setItems([...items, updatedComplete]);
   };
 
-  const toggleVivek = async (itemId, personSelected) => {
+  const togglePersonOne = async (itemId, personSelected) => {
     const response = await axios.patch(
       `http://localhost:3001/assignItemToPerson/${itemId}`,
-      { vivek: personSelected }
+      { personOne: personSelected }
     );
 
     const updatedPerson = items.map((item) => {
@@ -118,20 +100,19 @@ const App = () => {
         return {
           // ...response.data
           ...item,
-          vivek: personSelected,
+          personOne: personSelected,
         };
       }
       return item;
     });
-
     console.log(updatedPerson);
     setItems(updatedPerson);
   };
 
-  const toggleKhadija = async (itemId, personSelected) => {
+  const togglePersonTwo = async (itemId, personSelected) => {
     const response = await axios.patch(
       `http://localhost:3001/assignItemToPerson/${itemId}`,
-      { khadija: personSelected }
+      { personTwo: personSelected }
     );
 
     const updatedPerson = items.map((item) => {
@@ -139,13 +120,12 @@ const App = () => {
         return {
           // ...response.data
           ...item,
-          khadija: personSelected,
+          personTwo: personSelected,
         };
       }
       return item;
     });
 
-    console.log(updatedPerson);
     setItems(updatedPerson);
   };
 
@@ -157,9 +137,10 @@ const App = () => {
         onDelete={deleteItemById}
         onEdit={editItemById}
         onComplete={toggleCompleted}
-        onToggleVivek={toggleVivek}
-        onToggleKhadija={toggleKhadija}
+        onTogglePersonOne={togglePersonOne}
+        onTogglePersonTwo={togglePersonTwo}
       />
+      <Footer />
     </div>
   );
 };
