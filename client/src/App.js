@@ -10,10 +10,10 @@ const App = () => {
   const fetchItems = () => {
     // make sure to use http not https
     // http://localhost:3000/ - local dev host
-    // https://arquimedes-list-api.onrender.com/ online hosted server
+    // https://arquimedes-list-api-v2.onrender.com/ online hosted server
 
     axios
-      .get("https://arquimedes-list-api.onrender.com/getItems")
+      .get("https://arquimedes-list-api-v2.onrender.com/getItems")
       .then((res) => setItems(res.data))
       .catch((err) => console.log(err));
   };
@@ -24,7 +24,7 @@ const App = () => {
 
   const createItem = async (item) => {
     const response = await axios.post(
-      "https://arquimedes-list-api.onrender.com/createItem",
+      "https://arquimedes-list-api-v2.onrender.com/createItem",
       {
         item,
       }
@@ -40,7 +40,7 @@ const App = () => {
   const deleteItemById = async (itemId) => {
     // REMEMBER: in mongodb, id is saved as _id instead!!
     await axios.delete(
-      `https://arquimedes-list-api.onrender.com/deleteItem/${itemId}`
+      `https://arquimedes-list-api-v2.onrender.com/deleteItem/${itemId}`
     );
 
     const updatedItems = items.filter((item) => {
@@ -54,7 +54,7 @@ const App = () => {
   const editItemById = async (itemId, newItem) => {
     // Remember: In an axios patch request, the second argument after the url is the original object (key) (taken from Schema in backend) and the new object you want to replace it with (value). THIS second argument is the data (payload) that goes back to the database.
     const response = await axios.patch(
-      `https://arquimedes-list-api.onrender.com/updateItem/${itemId}`,
+      `https://arquimedes-list-api-v2.onrender.com/updateItem/${itemId}`,
       { item: newItem }
     );
 
@@ -77,7 +77,7 @@ const App = () => {
   const toggleCompleted = async (itemId, isItemCompleted) => {
     // access database and patch completed with either true or false, based on the argument isItemCompleted
     const response = await axios.patch(
-      `https://arquimedes-list-api.onrender.com/completeItem/${itemId}`,
+      `https://arquimedes-list-api-v2.onrender.com/completeItem/${itemId}`,
       { completed: isItemCompleted }
     );
     // update the data on the frontend with the data
@@ -96,7 +96,7 @@ const App = () => {
 
   const togglePersonOne = async (itemId, personSelected) => {
     const response = await axios.patch(
-      `https://arquimedes-list-api.onrender.com/assignItemToPerson/${itemId}`,
+      `https://arquimedes-list-api-v2.onrender.com/assignItemToPerson/${itemId}`,
       { personOne: personSelected }
     );
 
@@ -116,7 +116,7 @@ const App = () => {
 
   const togglePersonTwo = async (itemId, personSelected) => {
     const response = await axios.patch(
-      `https://arquimedes-list-api.onrender.com/assignItemToPerson/${itemId}`,
+      `https://arquimedes-list-api-v2.onrender.com/assignItemToPerson/${itemId}`,
       { personTwo: personSelected }
     );
 
