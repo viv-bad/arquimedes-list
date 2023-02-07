@@ -50,7 +50,7 @@ const ItemShow = ({
 
   //here, we assign the highlighted violet tag class if vivek is true (upon clicking handleV) or khadija is true (clicking handleK), else we leave the button as an unhighlighted classname
   let selected = (
-    <div className="flex gap-3">
+    <div className="flex gap-3 ">
       <button
         className={
           item.personOne
@@ -60,7 +60,7 @@ const ItemShow = ({
         }
         onClick={handlePersonOne}
       >
-        {item.personOne ? "Person 1 " : "P-1"}
+        {item.personOne ? "User 1 " : "User"}
       </button>
 
       <button
@@ -72,7 +72,7 @@ const ItemShow = ({
         }
         onClick={handlePersonTwo}
       >
-        {item.personTwo ? "Person 2" : "P-2"}
+        {item.personTwo ? "User 2" : "User"}
       </button>
     </div>
   );
@@ -104,12 +104,11 @@ const ItemShow = ({
 
   // if item.completed (in the database) is true then cross out the item
 
-  const fullDate = item.updatedAt.split("T");
-
-  const date = fullDate[0].split("-").reverse().join("/");
-  const time = fullDate[1].split(".")[0].slice(0, -3);
-
   if (item.completed) {
+    const fullDate = item.updatedAt.split("T");
+
+    const date = fullDate[0].split("-").reverse().join("/");
+    const time = fullDate[1].split(".")[0].slice(0, -3);
     content = (
       <div className="flex gap-4">
         <h3>
@@ -156,8 +155,8 @@ const ItemShow = ({
   }
 
   return (
-    <div className="h-14 bg-gradient-to-r m-6">
-      <div className="border-2 rounded-lg p-2 h-18 bg-slate-200 hover:bg-slate-300 shadow-lg cursor-pointer max-sm:w-60 max-sm:p-4">
+    <div className="h-14 bg-gradient-to-r m-6 max-sm:text-sm">
+      <div className="border-2 rounded-lg p-2 h-18 bg-slate-200 hover:bg-slate-300 shadow-lg cursor-pointer max-sm:w-60 max-sm:p-4 ">
         <div className="flex justify-between">
           {/* inject content from above here */}
           {content}
